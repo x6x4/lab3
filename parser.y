@@ -1,6 +1,7 @@
 %define parse.assert
 %define api.value.type variant
 %language "c++"
+%require "3.2"
 
 %code{
 #include <iostream>

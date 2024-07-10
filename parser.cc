@@ -1,9 +1,7 @@
-#include "parser.tab.h"
+#include "parser.tab.hh"
 #include <iostream>
 
-
-
-
+extern int yyparse();
 
 int main(int argc, char ** argv)
 {

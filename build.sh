@@ -1,5 +1,5 @@
-rm -f parser.tab.c parser.tab.h lex.yy.cc
+rm -f parser.tab.cc parser.tab.hh lex.yy.cc
 
 bison -d parser.y
 flex scanner.l
-g++ -o result lex.yy.cc parser.tab.h parser.tab.c parser.cc  
+g++ -Wno-register -o a.out lex.yy.cc parser.tab.hh parser.tab.cc parser.cc  

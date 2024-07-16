@@ -1,10 +1,14 @@
-#include "parser.tab.hh"
+#include "scanner.hh" 
 #include <iostream>
 
-extern int yyparse();
+using Parser = yy::parser;
 
 int main(int argc, char ** argv)
 {
-    yyparse();
-    return 0;
+    Scanner scanner;
+    Parser parser(scanner);
+
+    scanner.yyrestart(&std::cin);
+    int res = parser();
+    return res;
 }

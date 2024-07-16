@@ -3,15 +3,17 @@
 #include <string>
 #include <utility>
 #include <variant>
+#include "vars.h"
 
 
-class Variable {};
+class Variable {
 
-class Integer {};
-
-class Boolean {};
-
-class Cell {};
+    int value;
+    friend std::ostream& operator<<(std::ostream& os, const Variable& var) {
+        os << var.value; 
+        return os; 
+    }
+};
 
 
 using ValueType = std::variant<Variable, Integer, Boolean, Cell>;
@@ -28,5 +30,19 @@ struct Symbol_table {
 
     void fill_entry (const std::string &name, ValueType& value) {
         symbol_table[name] = value;
+    }
+
+    ValueType get_entry (const std::string &name) {
+        return symbol_table[name];
+    }
+
+    void print() {
+
+        for (const auto &entry : symbol_table) {
+            std::cout << entry.first << ' ';
+            std::visit([](const auto& value) {
+                std::cout << "Value: " << value << std::endl;
+            }, entry.second);
+        }
     }
 };

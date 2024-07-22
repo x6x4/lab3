@@ -1,7 +1,3 @@
 function main () do 
-c 
-a:=5
-b:=6+8
-
-g:=TRUE
+    g:=TRUE
 done 

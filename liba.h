@@ -16,7 +16,7 @@ class Variable {
 };
 
 
-using ValueType = std::variant<Variable, Integer, Boolean, Cell>;
+using ValueType = std::variant<Integer, Boolean>;
 
 struct Symbol_table {
 

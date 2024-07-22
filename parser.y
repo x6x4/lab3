@@ -3,6 +3,7 @@
 %define parse.assert
 %define api.token.constructor
 %define api.value.type variant
+%define parse.error detailed
 
 %language "c++"
 %require "3.5"
@@ -21,7 +22,6 @@ class Scanner;
 
 extern "C" int yyerror(const char *s) { 
     std::cout << s << std::endl;
-    return 0;
 };
 
 Symbol_table symtab;
@@ -74,24 +74,26 @@ assignment
 } 
 
 var_declaration: 
-VARIABLE { symtab.add_entry($1); }
+VARIABLE { symtab.add_entry($1); std::cout << $1 << std::endl; }
 
 expr
 : arith_expr { $$ = $1; }
 | logic_expr { $$ = $1; }
 
 logic_expr
-: xor_expr { $$ = $1; std::cout << $1 << std::endl; }
+: boolean { $$ = $1; }
+| xor_expr { $$ = $1; }
 
 xor_expr
 : comp_expr { $$ = $1; }
 | xor_expr XOR comp_expr { $$ = $1 ^ $3; }
 
 comp_expr
-: boolean { $$ = $1; }
-| comp_expr EQ boolean { $$ = $1 == $3; }
-| comp_expr LT boolean { $$ = $1 < $3; }
-| comp_expr GT boolean { $$ = $1 > $3; }
+: expr EQ expr { 
+    $$ = ($1 == $3); 
+}
+| arith_expr LT arith_expr { $$ = ($1 < $3); }
+| arith_expr GT arith_expr { $$ = ($1 > $3); }
 
 
 arith_expr

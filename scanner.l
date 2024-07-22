@@ -6,6 +6,7 @@ using namespace std;
 
 %option noyywrap c++
 %option yyclass="Scanner"
+%option caseless
 
 %%
 
@@ -21,9 +22,9 @@ using namespace std;
 
 "do"            {   return yy::parser::make_DO();  }
 
-t[rue]          {   return yy::parser::make_TRUE(Boolean(BoolVal::TRUE)); }
-f[alse]         {   return yy::parser::make_FALSE(Boolean(BoolVal::FALSE)); }
-u[ndef]         {   return yy::parser::make_UNDEF(Boolean(BoolVal::UNDEF)); }
+t(rue)*         {   return yy::parser::make_TRUE(Boolean(BoolVal::TRUE)); }
+f(alse)*        {   return yy::parser::make_FALSE(Boolean(BoolVal::FALSE)); }
+u(ndef)*        {   return yy::parser::make_UNDEF(Boolean(BoolVal::UNDEF)); }
 
 empty           { return yy::parser::make_EMPTY(Cell(CellVal::EMPTY)); }
 wall            { return yy::parser::make_WALL(Cell(CellVal::WALL)); }
